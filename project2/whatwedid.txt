@@ -1,0 +1,35 @@
+
+In this project(part 2 and part 3), we divide our whole program into 3 parts;
+The first part is to generate features from the training sample;
+The second part is to use the feature data generated in part 1 to train the Oracle;
+the third part is to use the Oracle to predict the test sample.
+
+For the second part, with the given features and en.tr100 as training set, we reach an accuracy of 38.781538% (9453/24375) on the dev set.
+
+For the improving performance part, we first use more training examples to train our Oracle（use en.tr as training set. And it turns out that new accuracy is 44.533333% (10855/24375) on the dev set.
+
+Then, we add some new features(the following accuracies are all trained based on en.tr100 and each feature is added separately):
+
+1. Fine POS pair and coarse POS pair: this gives generalization to word, and this feature will be denser, thus be trained more times than word pair as features, it turns out that this increase the accuracy by around 4%. The new accuracy is 43.150769% (10518/24375).
+
+2. The distance between the words on top of the stack and the buffer : This is inspired by the given paper. And it turns out that this does not help a lot. The new accuracy is 39.544615% (9639/24375) 
+
+3.2nd word in the stack and pair it with top words in stack and buffer:The new accuracy is 41.411282% (10094/24375)
+
+4.Pair 3rd word in stack with the top word in buffer: The new accuracy is 42.203077% (10287/24375)
+
+5. 2nd word in the buff and pair it with top words in stack and buffer: The new accuracy is 66.662564% (16249/24375)
+
+6.Trigrams(top words in stack and buffer, and second word in buffer: The new accuracy is 62.100513% (15137/24375)
+
+7.Pair the 3rd word in buffer with the top word in buffer: The new accuracy is 58.465641% (14251/24375)
+  And if we also add pairs of top word in stack and 3rd word in buffer, accuracy decreases to 55.757949% (13591/24375)
+
+8.4th word in buffer: The new accuracy is 47.027692% (11463/24375)
+
+9.Valency:This is inspired by the given paper and the new accuracy is 41.739487% (10174/24375) 
+
+
+3-8 is based on the intuition that the neibouring words in the stack and buffer and their features would have influence on the current words, thus it will also have impact on the arc.
+
+After above analysis, we finally decide to use all the above features. And the final accuracy we reach is 80.012308 (19503/24375) on the dev set with en.tr as the training set.
